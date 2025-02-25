@@ -12,10 +12,15 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/**/*': [
       './node_modules/@splinetool/react-spline/**/*',
-      './node_modules/@splinetool/runtime/**/*'
+      './node_modules/@splinetool/runtime/**/*',
+      './node_modules/framer-motion/**/*'
     ]
   },
-  serverComponentsExternalPackages: ['@splinetool/react-spline', '@splinetool/runtime'],
+  serverComponentsExternalPackages: [
+    '@splinetool/react-spline',
+    '@splinetool/runtime',
+    'framer-motion'
+  ],
   experimental: {
     // outputFileTracingIncludes: {
     //   '/**/*': [
@@ -43,7 +48,7 @@ const nextConfig: NextConfig = {
       rules: [
         ...config.module.rules,
         {
-          test: /@splinetool\/react-spline/,
+          test: /@splinetool\/react-spline|framer-motion/,
           resolve: {
             fullySpecified: false
           }
