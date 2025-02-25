@@ -2,8 +2,8 @@ const CACHE_NAME = 'swarmfund-cache-v1';
 const urlsToCache = [
   '/',
   '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/icon.png',
+  '/icon.png'
 ];
 
 self.addEventListener('install', (event) => {
