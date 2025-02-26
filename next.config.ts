@@ -8,6 +8,13 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  outputFileTracingIncludes: {
+    '/**/*': [
+      './node_modules/@splinetool/react-spline/**/*',
+      './node_modules/@splinetool/runtime/**/*'
+    ]
+  },
+  serverComponentsExternalPackages: ['@splinetool/react-spline', '@splinetool/runtime'],
   transpilePackages: [
     '@splinetool/react-spline',
     '@splinetool/runtime',
