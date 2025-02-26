@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
@@ -9,58 +8,31 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  outputFileTracingIncludes: {
-    '/**/*': [
-      './node_modules/@splinetool/react-spline/**/*',
-      './node_modules/@splinetool/runtime/**/*',
-      './node_modules/framer-motion/**/*'
-    ]
-  },
-  serverComponentsExternalPackages: [
+  transpilePackages: [
     '@splinetool/react-spline',
     '@splinetool/runtime',
-    'framer-motion'
+    'framer-motion',
+    '@privy-io/react-auth'
   ],
-  experimental: {
-    // outputFileTracingIncludes: {
-    //   '/**/*': [
-    //     './node_modules/@splinetool/react-spline/**/*',
-    //     './node_modules/@splinetool/runtime/**/*'
-    //   ]
-    // }
-  },
   webpack: (config) => {
-    config.resolve = {
-      ...config.resolve,
-      extensionAlias: {
-        '.js': ['.js', '.ts', '.tsx']
-      },
-      mainFields: ['module', 'main', 'browser'],
-      conditionNames: ['import', 'require', 'node', 'default'],
-      fallback: {
-        ...config.resolve.fallback,
-        module: false,
-      }
+    // Configure node polyfills
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+      net: false,
+      tls: false,
+      crypto: require.resolve('crypto-browserify'),
+      stream: require.resolve('stream-browserify'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      zlib: require.resolve('browserify-zlib'),
+      path: require.resolve('path-browserify'),
+      buffer: require.resolve('buffer/'),
     };
-    config.module = {
-      ...config.module,
-      exprContextCritical: false,
-      rules: [
-        ...config.module.rules,
-        {
-          test: /@splinetool\/react-spline|framer-motion/,
-          resolve: {
-            fullySpecified: false
-          }
-        }
-      ]
-    };
+    
     return config;
   },
-  pwa: {
-    dest: 'public',
-    disable: process.env.NODE_ENV === 'development'
-  }
 };
 
 export default nextConfig;
